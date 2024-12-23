@@ -1,0 +1,68 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h3 class="text-center mb-4">Sign Up</h3>
+          <form (ngSubmit)="onSubmit()">
+            <!-- Username -->
+            <div class="mb-3">
+              <label for="username" class="form-label">Username</label>
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                [(ngModel)]="user.username"
+                name="username"
+                placeholder="Enter your username"
+                required
+              />
+            </div>
+
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                [(ngModel)]="user.password"
+                name="password"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input
+                type="password"
+                class="form-control"
+                id="confirmPassword"
+                [(ngModel)]="user.confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirm your password"
+                required
+              />
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100">
+              Sign Up
+            </button>
+          </form>
+
+          <!-- Display success or error message -->
+          <div *ngIf="responseMessage" class="alert alert-info mt-3">
+            {{ responseMessage }}
+          </div>
+
+          <div class="text-center mt-3">
+            <small>Already have an account? <a href="#">Login here</a></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

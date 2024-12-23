@@ -1,0 +1,22 @@
+.container {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .card {
+    border-radius: 1rem;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+  
+  blockquote {
+    font-style: italic;
+    color: #555;
+  }
+  
+  blockquote footer {
+    color: #007bff;
+  }
+  
