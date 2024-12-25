@@ -52,7 +52,7 @@ export class AuthKeyClockGuard extends KeycloakAuthGuard {
         if (!(requiredRoles instanceof Array) || requiredRoles.length === 0) {
             return true;
         }
-
+        this.user.roles=this.roles;
         // Allow the user to proceed if all the required roles are present.
         return requiredRoles.some((role) => this.roles.includes(role));
     }

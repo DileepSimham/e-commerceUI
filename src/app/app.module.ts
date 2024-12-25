@@ -13,6 +13,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ContactComponent } from './components/contact/contact.component';
 import{KeycloakAngularModule,KeycloakService} from 'keycloak-angular';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 function initializeKeycloak(keycloak:KeycloakService){
@@ -41,7 +42,8 @@ function initializeKeycloak(keycloak:KeycloakService){
     SignupComponent,
     ProductsComponent,
     CartComponent,
-    ContactComponent
+    ContactComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

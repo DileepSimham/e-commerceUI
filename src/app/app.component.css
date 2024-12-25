@@ -1,0 +1,23 @@
+/* Fix the header at the top */
+app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #fff; /* Ensure visibility */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    height: 60px; /* Adjust to your header height */
+}
+
+/* Add margin to the body so content doesn't overlap the header */
+body {
+    margin-top: 60px; /* Adjust based on your header height */
+    font-family: Arial, sans-serif; /* Optional: font styling */
+}
+
+/* Optional: Make the content area scrollable */
+main {
+    padding-top: 5%;
+    overflow-y: auto; /* Make the content scrollable */
+}

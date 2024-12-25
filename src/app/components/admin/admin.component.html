@@ -1,0 +1,69 @@
+<div class="container mt-4">
+  <h2 class="mb-4 text-center">Admin Panel - User List</h2>
+
+  <!-- User Table with Search Inputs in the Table Header -->
+  <table class="table table-hover table-bordered table-striped">
+    <thead class="thead-light">
+      <tr>
+        <th></th>
+        <th>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search by Username"
+            [(ngModel)]="searchText.username"
+            (input)="filterUsers()"
+          />
+        </th>
+        <th>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search by First Name"
+            [(ngModel)]="searchText.firstName"
+            (input)="filterUsers()"
+          />
+        </th>
+        <th>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search by Last Name"
+            [(ngModel)]="searchText.lastName"
+            (input)="filterUsers()"
+          />
+        </th>
+        <th>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search by Email"
+            [(ngModel)]="searchText.email"
+            (input)="filterUsers()"
+          />
+        </th>
+      </tr>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of filteredUsers" class="table-light">
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td>{{ user.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Message when no users match -->
+  <div *ngIf="filteredUsers.length === 0" class="alert alert-warning">
+    No users found matching your search criteria!
+  </div>
+</div>

@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { AppUser } from '../model/app-user.mode';
+import { Product } from '../model/product.model';
+import { ProductService } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
+import { Cart } from '../model/cart.model';
 
 @Component({
   selector: 'app-products',
@@ -9,19 +13,43 @@ import { AppUser } from '../model/app-user.mode';
 })
 export class ProductsComponent {
 
-  users: AppUser[] = []; // Array to hold the list of users
 
-  constructor(private userService: AuthService) {}
+  products: Product[] = [];
+
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe(
-      (data: AppUser[]) => {
-        this.users = data;  // Assign the fetched data to the users array
+    this.loadProducts();
+  }
+
+  loadProducts(): void {
+    this.productService.getProducts().subscribe(
+      (products) => {
+        this.products = products;
       },
       (error) => {
-        console.error('Error fetching users:', error);  // Handle error if any
+        console.error('Error loading products:', error);
       }
     );
   }
+
+ // Add product to cart
+ addToCart(product: Product): void {
+
+  console.log(product)
+  this.cartService.addToCart(product.id).subscribe(
+    (cart: Cart) => {
+      console.log('Product added to cart:', cart);
+      alert('Product added to cart!');
+    },
+    (error) => {
+      console.error('Error adding product to cart:', error);
+      alert('Failed to add product to cart');
+    }
+  );
+}
 
 }

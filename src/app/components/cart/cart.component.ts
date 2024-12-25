@@ -1,10 +1,72 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Cart } from '../model/cart.model';
+import { CartService } from '../../services/cart.service';
+
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.css'
+  styleUrls: ['./cart.component.css']
 })
-export class CartComponent {
+export class CartComponent implements OnInit {
+
+  cart: Cart = { products: [] };
+  total: number = 0;
+
+  constructor(private cartService: CartService) { }
+
+  ngOnInit(): void {
+    this.loadCart();
+  }
+
+  // Load user's cart
+  loadCart(): void {
+    this.cartService.getCart().subscribe(cart => {
+      this.cart = cart;
+      this.calculateTotal();
+    });
+  }
+
+  // Remove product from cart
+  removeProduct(productId: number): void {
+    this.cartService.removeFromCart(productId).subscribe(() => {
+      this.loadCart(); // Reload cart after removing product
+    });
+  }
+
+  // Calculate total price of the cart
+  calculateTotal(): void {
+    this.total = this.cart.products.reduce((sum, product) => sum + (product.price || 0), 0);
+  }
+
+  checkout(): void {
+    this.cartService.checkout().subscribe(response => {
+      alert('Checkout successful!');
+      this.cart = { products: [] }; // Clear cart after checkout
+      this.total = 0;
+    });
+  }
+  
+  checkout2(): void {
+    this.cartService.checkout2().subscribe(
+      (response) => {
+        // Log the response to the console
+        console.log('Checkout response:', response);
+  
+        // Proceed with the successful checkout
+        if (response.sessionUrl) {
+          window.location.href = response.sessionUrl; // Redirect to the Stripe payment session
+        }
+  
+        // Call the checkout method after handling response
+        // this.checkout(); // This will execute the checkout logic
+  
+      },
+      (error) => {
+        console.error('Error during checkout:', error);
+      }
+    );
+  }
+  
 
 }

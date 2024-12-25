@@ -4,21 +4,24 @@
     <a class="navbar-brand" routerLink="/">ShopEase</a>
 
     <!-- Toggler for Mobile View -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <!-- Navbar Links -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
+
+
+        <!-- Admin Link, shown only if the user has the ADMIN role -->
+        <li class="nav-item" *ngIf="user.authStatus=='AUTH'">
+          <a class="nav-link" style="color: rgb(243, 71, 140);">Welcome, {{user.name}}</a>
+        </li>
+        <li class="nav-item" *ngIf="isAdmin()">
+          <a class="nav-link" routerLink="/admin"><b>ADMIN</b></a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link active" routerLink="/home" aria-current="page">Home</a>
         </li>
