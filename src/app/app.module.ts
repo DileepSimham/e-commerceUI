@@ -2,6 +2,8 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Add this
+import { NgxSpinnerModule } from 'ngx-spinner'; // Add this
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -50,7 +52,9 @@ function initializeKeycloak(keycloak:KeycloakService){
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    KeycloakAngularModule
+    KeycloakAngularModule,
+    BrowserAnimationsModule, // Required for ngx-spinner animations
+    NgxSpinnerModule.forRoot() // Import ngx-spinner
   ],
   providers: [
     {

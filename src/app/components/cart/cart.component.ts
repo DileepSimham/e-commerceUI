@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Cart } from '../model/cart.model';
 import { CartService } from '../../services/cart.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class CartComponent implements OnInit {
   cart: Cart = { products: [] };
   total: number = 0;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.loadCart();
@@ -40,6 +41,7 @@ export class CartComponent implements OnInit {
   }
 
   checkout(): void {
+    
     this.cartService.checkout().subscribe(response => {
       alert('Checkout successful!');
       this.cart = { products: [] }; // Clear cart after checkout
@@ -48,6 +50,7 @@ export class CartComponent implements OnInit {
   }
   
   checkout2(): void {
+    this.spinner.show()
     this.cartService.checkout2().subscribe(
       (response) => {
         // Log the response to the console
@@ -57,6 +60,7 @@ export class CartComponent implements OnInit {
         if (response.sessionUrl) {
           window.location.href = response.sessionUrl; // Redirect to the Stripe payment session
         }
+        this.spinner.hide()
   
         // Call the checkout method after handling response
         // this.checkout(); // This will execute the checkout logic
