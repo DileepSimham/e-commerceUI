@@ -13,31 +13,32 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
 
-
-        <!-- Admin Link, shown only if the user has the ADMIN role -->
-        <li class="nav-item" *ngIf="user.authStatus=='AUTH'">
-          <a class="nav-link" style="color: rgb(243, 71, 140);">Welcome, {{user.name}}</a>
+        <!-- Dropdown for Authenticated User -->
+        <li class="nav-item dropdown" *ngIf="user.authStatus == 'AUTH'">
+          <a class="nav-link dropdown-toggle" href="#" id="welcomeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+            style="color: rgb(243, 71, 140);">
+            Welcome, {{ user.name }}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="welcomeDropdown">
+            <!-- <li><a class="dropdown-item" routerLink="/home">Home</a></li> -->
+            <li><a class="dropdown-item" routerLink="/products">Products</a></li>
+            <li><a class="dropdown-item" routerLink="/cart">Cart</a></li>
+            <li><a class="dropdown-item" routerLink="/contact">Contact</a></li>
+            <li><a class="dropdown-item" routerLink="/myOrders">Your Orders</a></li>
+            <li><a class="dropdown-item" routerLink="/track-order">Track Your Order</a></li>
+          </ul>
         </li>
+
+        <!-- Admin Link -->
         <li class="nav-item" *ngIf="isAdmin()">
           <a class="nav-link" routerLink="/admin"><b>ADMIN</b></a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link active" routerLink="/home" aria-current="page">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/products">Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/cart">Cart</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/contact">Contact</a>
-        </li>
-        <li class="nav-item" *ngIf="user.authStatus!='AUTH'">
+        <!-- Login/Logout Buttons -->
+        <li class="nav-item" *ngIf="user.authStatus != 'AUTH'">
           <a class="btn btn-primary btn-sm ms-3" (click)="login()">Login</a>
         </li>
-        <li class="nav-item" *ngIf="user.authStatus=='AUTH'">
+        <li class="nav-item" *ngIf="user.authStatus == 'AUTH'">
           <a class="btn btn-primary btn-sm ms-3" (click)="logout()">Logout</a>
         </li>
       </ul>

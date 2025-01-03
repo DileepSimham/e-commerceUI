@@ -1,31 +1,25 @@
-/* You can add styles here for the Admin Component */
+/* Custom styles */
 .container {
-    margin-top: 20px;
-  }
-  
-  table {
-    width: 100%;
-  }
-  
-  th, td {
-    text-align: left;
-    padding: 8px;
-  }
-  
-
-  /* Custom styles for the Admin table */
-.table th, .table td {
-  text-align: center;
-  vertical-align: middle;
-}
-
-/* Custom style for table rows on hover */
-.table-hover tbody tr:hover {
-  background-color: #f8f9fa;
+  margin-top: 20px;
 }
 
 /* Styling for empty table message */
 .alert-warning {
   font-weight: bold;
   text-align: center;
+}
+
+/* Responsive tweaks for smaller screens */
+@media (max-width: 767px) {
+  table {
+    font-size: 14px;
+  }
+
+  .form-control {
+    font-size: 14px;
+  }
+
+  .btn-primary {
+    font-size: 14px;
+  }
 }

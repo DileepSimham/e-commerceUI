@@ -11,7 +11,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class CartComponent implements OnInit {
 
-  cart: Cart = { products: [] };
+  cart: Cart = { 
+    id: 0,              // Default id (you can change this later)
+    user: {},           // Default empty object, will be populated once fetched
+    products: [],       // Empty array for products
+    orderstatus: ''     // Default empty string for order status
+  };
+  
   total: number = 0;
 
   constructor(private cartService: CartService,private spinner: NgxSpinnerService) { }
@@ -22,8 +28,9 @@ export class CartComponent implements OnInit {
 
   // Load user's cart
   loadCart(): void {
-    this.cartService.getCart().subscribe(cart => {
+    this.cartService.getCart2().subscribe(cart => {
       this.cart = cart;
+      console.log(cart)
       this.calculateTotal();
     });
   }
@@ -40,14 +47,14 @@ export class CartComponent implements OnInit {
     this.total = this.cart.products.reduce((sum, product) => sum + (product.price || 0), 0);
   }
 
-  checkout(): void {
+  // checkout(): void {
     
-    this.cartService.checkout().subscribe(response => {
-      alert('Checkout successful!');
-      this.cart = { products: [] }; // Clear cart after checkout
-      this.total = 0;
-    });
-  }
+  //   this.cartService.checkout().subscribe(response => {
+  //     alert('Checkout successful!');
+  //     this.cart = { products: [] }; // Clear cart after checkout
+  //     this.total = 0;
+  //   });
+  // }
   
   checkout2(): void {
     this.spinner.show()

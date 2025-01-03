@@ -1,69 +1,113 @@
 <div class="container mt-4">
-  <h2 class="mb-4 text-center">Admin Panel - User List</h2>
+  <div class="row">
+    <!-- User List Section -->
+    <div class="col-6">
+      <h2 class="mb-4 text-center">Admin Panel - User List</h2>
 
-  <!-- User Table with Search Inputs in the Table Header -->
-  <table class="table table-hover table-bordered table-striped">
-    <thead class="thead-light">
-      <tr>
-        <th></th>
-        <th>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search by Username"
-            [(ngModel)]="searchText.username"
-            (input)="filterUsers()"
-          />
-        </th>
-        <th>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search by First Name"
-            [(ngModel)]="searchText.firstName"
-            (input)="filterUsers()"
-          />
-        </th>
-        <th>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search by Last Name"
-            [(ngModel)]="searchText.lastName"
-            (input)="filterUsers()"
-          />
-        </th>
-        <th>
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search by Email"
-            [(ngModel)]="searchText.email"
-            (input)="filterUsers()"
-          />
-        </th>
-      </tr>
-      <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of filteredUsers" class="table-light">
-        <td>{{ user.id }}</td>
-        <td>{{ user.username }}</td>
-        <td>{{ user.firstName }}</td>
-        <td>{{ user.lastName }}</td>
-        <td>{{ user.email }}</td>
-      </tr>
-    </tbody>
-  </table>
+      <!-- User Table with Search Inputs -->
+      <table class="table table-hover table-bordered table-striped">
+        <thead class="thead-light">
+          <tr>
+            <th></th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search by Username"
+                [(ngModel)]="searchText.username"
+                (input)="filterUsers()"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search by First Name"
+                [(ngModel)]="searchText.firstName"
+                (input)="filterUsers()"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search by Last Name"
+                [(ngModel)]="searchText.lastName"
+                (input)="filterUsers()"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search by Email"
+                [(ngModel)]="searchText.email"
+                (input)="filterUsers()"
+              />
+            </th>
+          </tr>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of filteredUsers" class="table-light">
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.email }}</td>
+          </tr>
+        </tbody>
+      </table>
 
-  <!-- Message when no users match -->
-  <div *ngIf="filteredUsers.length === 0" class="alert alert-warning">
-    No users found matching your search criteria!
+      <!-- Message when no users match -->
+      <div *ngIf="filteredUsers.length === 0" class="alert alert-warning text-center">
+        No users found matching your search criteria!
+      </div>
+    </div>
+
+    <!-- User Orders Section -->
+    <div class="col-5 m-5 " style="background-color: aquamarine;">
+      <h3 class="text-center">User Orders</h3>
+
+      <div *ngIf="carts.length > 0">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Cart ID</th>
+              <th>User Email</th>
+              <th>Order Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cart of carts">
+              <td>{{ cart.id }}</td>
+              <td>{{ cart.user.email }}</td>
+              <td>{{ cart.orderStatus }}</td>
+              <td>
+                <!-- Dropdown or button to change status -->
+                <select [(ngModel)]="cart.orderstatus" class="form-control">
+                  <option value="PENDING">Pending</option>
+                  <option value="SHIPPED">Shipped</option>
+                  <option value="DELIVERED">Delivered</option>
+                  <option value="CANCELLED">Cancelled</option>
+                </select>
+                <button class="btn btn-primary mt-2" (click)="updateStatus( cart.user.email, cart.orderstatus)">Update Status</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="carts.length === 0" class="alert alert-warning text-center">
+        No carts found for users.
+      </div>
+    </div>
   </div>
 </div>

@@ -1,0 +1,56 @@
+<div class="container my-5">
+    <h2 class="text-center mb-4">Order History</h2>
+  
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  
+    <!-- Error Message -->
+    <div *ngIf="hasError" class="alert alert-danger text-center" role="alert">
+      Unable to fetch order history. Please try again later.
+    </div>
+  
+    <!-- Orders -->
+    <div *ngIf="!isLoading && orders.length > 0">
+      <div *ngFor="let order of orders" class="mb-4">
+        <div class="card">
+          <div class="card-header bg-success text-white">
+            <!-- <h5 class="card-title">Order ID: {{ order.id }}</h5> -->
+         
+            <p class="card-subtitle">Status: <span class="fw-bold">{{ order.status }}</span></p>
+
+              <!-- Order Placed Date (or 'NA' if null) -->
+          <p class="card-subtitle">Order Placed: {{ order.orderPlacedDate ? (order.orderPlacedDate | date:'medium') : 'NA' }}</p>
+          </div>
+          <div class="card-body">
+            <h6 class="card-subtitle mb-3">Products:</h6>
+            <ul class="list-group">
+              <li *ngFor="let product of order.products" class="list-group-item">
+                <strong>{{ product.name }}</strong> - {{ product.price | currency }}
+                <p class="small mb-0">{{ product.description }}</p>
+              </li>
+            </ul>
+          </div>
+          <div class="card-footer text-end">
+            <h5>Total: {{ order.totalAmount | currency }}</h5>
+
+             <!-- Order Delivery Date (or 'NA' if null) -->
+          <p class="card-subtitle">Order Delivered: 
+            {{ order.orderDeliveryDate ? (order.orderDeliveryDate | date:'medium') : 'NA' }}
+          </p>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- No Orders Found -->
+    <div *ngIf="!isLoading && orders.length === 0" class="alert alert-warning text-center" role="alert">
+      No orders found for the user.
+    </div>
+  </div>
+  

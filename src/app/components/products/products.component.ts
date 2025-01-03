@@ -6,6 +6,7 @@ import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { Cart } from '../model/cart.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -20,8 +21,9 @@ export class ProductsComponent {
   constructor(
     private productService: ProductService,
     private cartService: CartService,
-    private spinner: NgxSpinnerService
-  ) {}
+    private spinner: NgxSpinnerService,
+    private router: Router // Inject Router here
+  ) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -41,23 +43,27 @@ export class ProductsComponent {
     );
   }
 
- // Add product to cart
- addToCart(product: Product): void {
+  // // Add product to cart
+  // addToCart(product: Product): void {
 
-  this.spinner.show()
-  console.log(product)
-  this.cartService.addToCart(product.id).subscribe(
-    (cart: Cart) => {
-      console.log('Product added to cart:', cart);
-      // alert('Product added to cart!');
-      this.spinner.hide()
-    },
-    (error) => {
-      console.error('Error adding product to cart:', error);
-      alert('Failed to add product to cart');
-      this.spinner.hide();
-    }
-  );
-}
+  //   this.spinner.show()
+  //   console.log(product)
+  //   this.cartService.addToCart(product.id).subscribe(
+  //     (cart: Cart) => {
+  //       console.log('Product added to cart:', cart);
+  //       // alert('Product added to cart!');
+  //       this.spinner.hide()
+  //     },
+  //     (error) => {
+  //       console.error('Error adding product to cart:', error);
+  //       alert('Failed to add product to cart');
+  //       this.spinner.hide();
+  //     }
+  //   );
+  // }
+
+  viewProduct(productId: number): void {
+    this.router.navigate(['/view-product', productId]); // Navigate to view-product component
+  }
 
 }

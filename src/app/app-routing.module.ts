@@ -8,6 +8,9 @@ import { ContactComponent } from './components/contact/contact.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthKeyClockGuard } from './components/routeguards/auth.route';
 import { AdminComponent } from './components/admin/admin.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { ViewProductComponent } from './components/view-product/view-product.component';
+import { OrderTrackingComponent } from './components/order-tracking/order-tracking.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -29,9 +32,24 @@ const routes: Routes = [
       roles: ['USER']
     }
   },
+  {
+    path: 'view-product/:id', component: ViewProductComponent, canActivate: [AuthKeyClockGuard], data: {
+      roles: ['USER']
+    }
+  },
 
   {
     path: 'contact', component: ContactComponent, canActivate: [AuthKeyClockGuard], data: {
+      roles: ['USER']
+    }
+  },
+  {
+    path: 'myOrders', component: OrdersComponent, canActivate: [AuthKeyClockGuard], data: {
+      roles: ['USER']
+    }
+  },
+  {
+    path: 'track-order', component: OrderTrackingComponent, canActivate: [AuthKeyClockGuard], data: {
       roles: ['USER']
     }
   },

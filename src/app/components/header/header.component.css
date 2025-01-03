@@ -1,20 +1,35 @@
 .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #007bff;
-  }
-  
-  .nav-link {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #555;
-  }
-  
-  .nav-link:hover {
-    color: #007bff;
-  }
-  
-  .btn-primary {
-    border-radius: 20px;
-  }
-  
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.nav-link {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.nav-link:hover {
+  color: #007bff;
+}
+
+.dropdown-menu {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.dropdown-item:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary {
+  border-radius: 20px;
+}

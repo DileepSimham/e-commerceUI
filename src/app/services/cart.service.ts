@@ -31,20 +31,45 @@ export class CartService {
         return this.http.post<Cart>(`${this.apiUrl}/add?productId=${productId}&user=${email}`, {});
     }
 
-    getCart(): Observable<Cart> {
+    // getCart(): Observable<Cart> {
 
-        const userDetails = JSON.parse(window.sessionStorage.getItem("userdetails"));
+    //     const userDetails = JSON.parse(window.sessionStorage.getItem("userdetails"));
 
-        // Extract the email
-        const email = userDetails ? userDetails.email : null;
+    //     // Extract the email
+    //     const email = userDetails ? userDetails.email : null;
 
-        return this.http.get<Product[]>(`${this.apiUrl}/products/${email}`).pipe(
-            map((products: Product[]) => {
-                // Wrap the array of products into a Cart object
-                return { products: products };
-            })
-        );
+    //     return this.http.get<Product[]>(`${this.apiUrl}/products/${email}`).pipe(
+    //         map((products: Product[]) => {
+    //             // Wrap the array of products into a Cart object
+    //             return { products: products };
+    //         })
+    //     );
+    // }
+
+    getCart2(): Observable<Cart> {
+      const userDetails = JSON.parse(window.sessionStorage.getItem("userdetails"));
+  
+      // Extract the email
+      const email = userDetails ? userDetails.email : null;
+  
+      return this.http.get<Cart>(`${this.apiUrl}/cart/${email}`).pipe(
+          map((cart: Cart) => {
+              // Directly return the cart object, which now includes user, products, and orderstatus
+              return cart;
+          })
+      );
     }
+
+    
+    getAllCarts(): Observable<Cart[]> {
+      return this.http.get<Cart[]>(`${this.apiUrl}/getAllCarts`).pipe(
+          map((cart: Cart[]) => {
+              // Directly return the cart object, which now includes user, products, and orderstatus
+              return cart;
+          })
+      );
+    }
+  
     
 
     // Remove product from cart
@@ -89,5 +114,16 @@ export class CartService {
         // Make the POST request to the backend with the correct URL
         return this.http.post<StripeResponse>(`${this.apiUrl}/checkout2/${email}`, {});
       }
+
+       // Change product status
+  changeProductStatus(email:String,newStatus: String): Observable<Cart> {
+   
+  
+      // Ensure the email is present
+      if (!email) {
+        throw new Error("User email is missing");
+      }
+    return this.http.put<Cart>(`${this.apiUrl}/update-status?user=${email}&newStatus=${newStatus}`, {});
+  }
     
 }

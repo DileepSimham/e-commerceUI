@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { KeycloakUserService } from '../../services/keycloakuser.service';
 import { KeycloakUser } from '../model/keycloakuser.model';
+import { Product } from '../model/product.model';
+import { CartService } from '../../services/cart.service';
+import { Cart } from '../model/cart.model';
 
 @Component({
   selector: 'app-admin',
@@ -8,6 +11,17 @@ import { KeycloakUser } from '../model/keycloakuser.model';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+
+  cart: Cart = {
+    id: 0,              // Default id (you can change this later)
+    user: {},           // Default empty object, will be populated once fetched
+    products: [],       // Empty array for products
+    orderstatus: ''     // Default empty string for order status
+  };  // Cart for the logged-in user
+
+  total: number = 0;
+
+  carts: Cart[] = []; // Store all carts for users
 
   users: KeycloakUser[] = [];
   filteredUsers: KeycloakUser[] = [];
@@ -18,10 +32,29 @@ export class AdminComponent implements OnInit {
     email: ''
   };
 
-  constructor(private keycloakUserService: KeycloakUserService) {}
+  constructor(private keycloakUserService: KeycloakUserService, private cartService: CartService) { }
 
   ngOnInit(): void {
     this.loadUsers();
+    this.loadCarts();
+  }
+
+  loadCarts(): void {
+    console.log("hello")
+    this.cartService.getAllCarts().subscribe(
+      (carts: Cart[]) => {
+        this.carts = carts;  // Store the list of carts
+        console.log(carts)
+        
+      },
+      (error) => {
+        console.error('Error loading carts:', error);
+      }
+    );
+  }
+
+  calculateTotal(): void {
+    this.total = this.cart.products.reduce((sum, product) => sum + (product.price || 0), 0);
   }
 
   loadUsers(): void {
@@ -51,4 +84,19 @@ export class AdminComponent implements OnInit {
       console.log("No users found!");
     }
   }
+
+  updateStatus(email: String, newStatus: string): void {
+    this.cartService.changeProductStatus(email,newStatus).subscribe(
+      (updatedCart) => {
+        // Update the cart in the list
+        this.carts = this.carts.map(cart => cart.user.email === email ? updatedCart : cart);
+        alert('Order status updated successfully!');
+      },
+      (error) => {
+        console.error('Error updating order status:', error);
+        alert('Error updating order status!');
+      }
+    );
+  }
+
 }

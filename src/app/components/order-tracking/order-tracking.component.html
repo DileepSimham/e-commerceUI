@@ -1,0 +1,20 @@
+<div class="orders-container" *ngIf="orders.length > 0; else noOrders">
+  <div class="order-card" *ngFor="let order of orders">
+    <div class="order-header">
+      <span class="order-id">Order ID: {{ order.id }}</span>
+      <span class="order-status {{ order.orderStatus.toLowerCase().replace(' ', '-') }}">
+        {{ order.orderStatus }}
+      </span>
+    </div>
+    <div class="order-details">
+      <p><strong>Product:</strong> {{ order.product.name }}</p>
+      <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+      <p><strong>Total Price:</strong> ${{ order.totalPrice | number: '1.2-2' }}</p>
+    </div>
+  </div>
+</div>
+<ng-template #noOrders>
+  <div class="no-orders">
+    <p>No orders found.</p>
+  </div>
+</ng-template>
